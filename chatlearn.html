@@ -85,54 +85,76 @@
         let score = 0;
         let selectedLanguage = '';
         
-        // Lesson data
         const lessons = {
-            Spanish: [
-                {
-                    title: "Basic Vocabulary",
-                    content: "Learn basic Spanish words like 'Hola' (Hello), 'Gracias' (Thank you), 'Sí' (Yes), 'No' (No).",
-                    quiz: [
-                        { question: "What is the Spanish word for 'Hello'?", options: ["Hola", "Bonjour", "Ciao"], answer: 0 },
-                        { question: "What is the Spanish word for 'Thank you'?", options: ["Merci", "Gracias", "Danke"], answer: 1 }
-                    ]
-                },
-                {
-                    title: "Basic Concepts",
-                    content: "Learn common phrases like '¿Cómo estás?' (How are you?), 'Buenos días' (Good morning).",
-                    quiz: [
-                        { question: "What is the Spanish phrase for 'Good morning'?", options: ["Bonjour", "Buenos días", "Buongiorno"], answer: 1 },
-                        { question: "How do you say 'How are you?' in Spanish?", options: ["¿Cómo estás?", "Wie geht's?", "Comment ça va?"], answer: 0 }
-                    ]
-                },
-                {
-                    title: "Intermediate Vocabulary",
-                    content: "Learn intermediate Spanish vocabulary, including words like 'Familia' (Family), 'Amigos' (Friends), 'Escuela' (School), and 'Trabajo' (Work).",
-                    quiz: [
-                        { question: "What is the Spanish word for 'Family'?", options: ["Familia", "Famiglia", "Familie"], answer: 0 },
-                        { question: "What is the Spanish word for 'Friends'?", options: ["Amigos", "Freunde", "Amici"], answer: 0 },
-                        { question: "What does 'Escuela' mean?", options: ["School", "Work", "Friend"], answer: 0 }
-                    ]
-                },
-                {
-                    title: "Basic Grammar",
-                    content: "Learn the basics of Spanish grammar, including subject-verb agreement and the use of articles 'el' and 'la' (the). For example, 'El niño' (The boy), 'La niña' (The girl).",
-                    quiz: [
-                        { question: "What is the correct article for 'niña'?", options: ["El", "La", "Los"], answer: 1 },
-                        { question: "What is the Spanish word for 'The boy'?", options: ["El niño", "La niña", "Los niños"], answer: 0 },
-                        { question: "Translate to Spanish: 'The girl'", options: ["El niño", "La niña", "La mujer"], answer: 1 }
-                    ]
-                },
-                {
-                    title: "Sentence Structure",
-                    content: "Learn simple sentence structures like 'Yo soy estudiante' (I am a student) and how to form questions like '¿Dónde está el baño?' (Where is the bathroom?).",
-                    quiz: [
-                        { question: "What does 'Yo soy estudiante' mean?", options: ["I am a student", "I am a teacher", "I am a parent"], answer: 0 },
-                        { question: "How do you say 'Where is the bathroom?' in Spanish?", options: ["¿Dónde está el baño?", "¿Dónde está el aula?", "¿Dónde está la escuela?"], answer: 0 },
-                        { question: "What does 'Yo tengo' mean?", options: ["I have", "I go", "I want"], answer: 0 }
-                    ]
-                }
+    Spanish: [
+        {
+            title: "Level 1: Basic Vocabulary",
+            content: [
+                "Learn basic Spanish greetings such as 'Hola' (Hello), 'Adiós' (Goodbye), 'Buenos días' (Good morning), and 'Buenas noches' (Good night).",
+                "Understand polite words like 'Por favor' (Please), 'Gracias' (Thank you), 'Lo siento' (Sorry), and 'De nada' (You're welcome).",
+                "Practice essential yes/no words: 'Sí' (Yes) and 'No' (No)."
+            ],
+            quiz: [
+                { question: "What is the Spanish word for 'Thank you'?", options: ["Merci", "Gracias", "Danke"], answer: 1 },
+                { question: "What is the Spanish phrase for 'Good morning'?", options: ["Bonjour", "Buenos días", "Buongiorno"], answer: 1 },
+                { question: "How do you say 'Yes' in Spanish?", options: ["Sí", "Oui", "Ja"], answer: 0 }
             ]
-        };
+        },
+        {
+            title: "Level 2: Basic Concepts",
+            content: [
+                "Learn phrases for basic interactions, like '¿Cómo estás?' (How are you?), 'Estoy bien' (I am well), '¿Cuál es tu nombre?' (What is your name?).",
+                "Introduce yourself with 'Me llamo' (My name is...) and respond to questions with 'Mucho gusto' (Nice to meet you).",
+                "Explore additional phrases: '¿De dónde eres?' (Where are you from?), 'Soy de' (I am from...)."
+            ],
+            quiz: [
+                { question: "What is the Spanish phrase for 'How are you?'", options: ["¿Cómo estás?", "¿Qué tal?", "¿Cómo va?"], answer: 0 },
+                { question: "How do you say 'My name is' in Spanish?", options: ["Je m'appelle", "Mi nombre es", "Me llamo"], answer: 2 },
+                { question: "What does 'Mucho gusto' mean?", options: ["Thank you", "Nice to meet you", "See you soon"], answer: 1 }
+            ]
+        },
+        {
+            title: "Level 3: Intermediate Vocabulary",
+            content: [
+                "Learn intermediate vocabulary for family members: 'Madre' (Mother), 'Padre' (Father), 'Hermano' (Brother), 'Hermana' (Sister).",
+                "Understand common places and objects: 'Escuela' (School), 'Trabajo' (Work), 'Casa' (House), 'Amigos' (Friends).",
+                "Practice talking about age: 'Tengo __ años' (I am __ years old) and describe basic possessions using 'Tengo' (I have)."
+            ],
+            quiz: [
+                { question: "What is the Spanish word for 'Friends'?", options: ["Freunde", "Amigos", "Amici"], answer: 1 },
+                { question: "What does 'Escuela' mean?", options: ["Work", "House", "School"], answer: 2 },
+                { question: "How do you say 'I am __ years old' in Spanish?", options: ["Tengo __ años", "Soy __ años", "Estar __ años"], answer: 0 }
+            ]
+        },
+        {
+            title: "Level 4: Basic Grammar",
+            content: [
+                "Learn about gendered nouns with articles 'El' (masculine) and 'La' (feminine), as in 'El niño' (The boy) and 'La niña' (The girl).",
+                "Explore common verbs like 'Ser' (To be) and 'Tener' (To have) with examples like 'Yo soy estudiante' (I am a student) and 'Yo tengo un hermano' (I have a brother).",
+                "Understand pluralization: add '-s' for vowels and '-es' for consonants, e.g., 'niños' (boys), 'meses' (months)."
+            ],
+            quiz: [
+                { question: "What is the correct article for 'niña'?", options: ["El", "La", "Los"], answer: 1 },
+                { question: "How do you say 'I have' in Spanish?", options: ["Yo ser", "Yo tener", "Yo tengo"], answer: 2 },
+                { question: "What does 'Los niños' mean?", options: ["The boys", "The girls", "The men"], answer: 0 }
+            ]
+        },
+        {
+            title: "Level 5: Sentence Structure",
+            content: [
+                "Learn to form basic sentences like 'Yo soy estudiante' (I am a student) and 'Ella es mi amiga' (She is my friend).",
+                "Practice asking questions: '¿Dónde está el baño?' (Where is the bathroom?), '¿Cuántos años tienes?' (How old are you?).",
+                "Combine nouns and verbs to describe routines: 'Trabajo en la escuela' (I work at the school) and 'Vivo en una casa grande' (I live in a big house)."
+            ],
+            quiz: [
+                { question: "How do you say 'Where is the bathroom?' in Spanish?", options: ["¿Dónde está la escuela?", "¿Dónde está el baño?", "¿Dónde está la casa?"], answer: 1 },
+                { question: "What does 'Trabajo en la escuela' mean?", options: ["I work at the school", "I go to the school", "I live in the school"], answer: 0 },
+                { question: "What does 'Ella es mi amiga' mean?", options: ["She is my friend", "He is my friend", "They are my friends"], answer: 0 }
+            ]
+        }
+    ]
+};
+
 
         function startLesson(language) {
             selectedLanguage = language;
