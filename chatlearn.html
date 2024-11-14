@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatLearn - Language Learning</title>
+    <!-- Chatbot Integration -->
+    <script>
+        window.embeddedChatbotConfig = {
+            chatbotId: "JYT_XbQwOhNUCc_4Xbm9K",
+            domain: "www.chatbase.co"
+        }
+    </script>
+    <script src="https://www.chatbase.co/embed.min.js" chatbotId="JYT_XbQwOhNUCc_4Xbm9K" domain="www.chatbase.co" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        #language-selection, #lesson-content, #chatbot {
+            width: 80%;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .quiz-option {
+            display: block;
+            margin: 5px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ChatLearn - Language Learning Platform</h1>
+    </header>
+
+    <!-- Language selection section -->
+    <section id="language-selection">
+        <h2>Select a Language</h2>
+        <button onclick="startLesson('Spanish')">Spanish</button>
+        <button onclick="startLesson('French')">French</button>
+    </section>
+
+    <!-- Dynamic lesson content section -->
+    <section id="lesson-content" style="display: none;">
+        <!-- Dynamic lesson content will load here -->
+    </section>
+
+    <!-- Dynamic quiz content section -->
+    <section id="quiz-content" style="display: none;"></section>
+
+    <!-- Final score display section -->
+    <section id="final-score" style="display: none;"></section>
+
+    <script>
+        let currentLesson = 0;
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedLanguage = '';
+        
+        // Lesson data
+        const lessons = {
+            Spanish: [
+                {
+                    title: "Basic Vocabulary",
+                    content: "Learn basic Spanish words like 'Hola' (Hello), 'Gracias' (Thank you), 'Sí' (Yes), 'No' (No).",
+                    quiz: [
+                        { question: "What is the Spanish word for 'Hello'?", options: ["Hola", "Bonjour", "Ciao"], answer: 0 },
+                        { question: "What is the Spanish word for 'Thank you'?", options: ["Merci", "Gracias", "Danke"], answer: 1 }
+                    ]
+                },
+                {
+                    title: "Basic Concepts",
+                    content: "Learn common phrases like '¿Cómo estás?' (How are you?), 'Buenos días' (Good morning).",
+                    quiz: [
+                        { question: "What is the Spanish phrase for 'Good morning'?", options: ["Bonjour", "Buenos días", "Buongiorno"], answer: 1 },
+                        { question: "How do you say 'How are you?' in Spanish?", options: ["¿Cómo estás?", "Wie geht's?", "Comment ça va?"], answer: 0 }
+                    ]
+                },
+                {
+                    title: "Intermediate Vocabulary",
+                    content: "Learn intermediate Spanish vocabulary, including words like 'Familia' (Family), 'Amigos' (Friends), 'Escuela' (School), and 'Trabajo' (Work).",
+                    quiz: [
+                        { question: "What is the Spanish word for 'Family'?", options: ["Familia", "Famiglia", "Familie"], answer: 0 },
+                        { question: "What is the Spanish word for 'Friends'?", options: ["Amigos", "Freunde", "Amici"], answer: 0 },
+                        { question: "What does 'Escuela' mean?", options: ["School", "Work", "Friend"], answer: 0 }
+                    ]
+                },
+                {
+                    title: "Basic Grammar",
+                    content: "Learn the basics of Spanish grammar, including subject-verb agreement and the use of articles 'el' and 'la' (the). For example, 'El niño' (The boy), 'La niña' (The girl).",
+                    quiz: [
+                        { question: "What is the correct article for 'niña'?", options: ["El", "La", "Los"], answer: 1 },
+                        { question: "What is the Spanish word for 'The boy'?", options: ["El niño", "La niña", "Los niños"], answer: 0 },
+                        { question: "Translate to Spanish: 'The girl'", options: ["El niño", "La niña", "La mujer"], answer: 1 }
+                    ]
+                },
+                {
+                    title: "Sentence Structure",
+                    content: "Learn simple sentence structures like 'Yo soy estudiante' (I am a student) and how to form questions like '¿Dónde está el baño?' (Where is the bathroom?).",
+                    quiz: [
+                        { question: "What does 'Yo soy estudiante' mean?", options: ["I am a student", "I am a teacher", "I am a parent"], answer: 0 },
+                        { question: "How do you say 'Where is the bathroom?' in Spanish?", options: ["¿Dónde está el baño?", "¿Dónde está el aula?", "¿Dónde está la escuela?"], answer: 0 },
+                        { question: "What does 'Yo tengo' mean?", options: ["I have", "I go", "I want"], answer: 0 }
+                    ]
+                }
+            ]
+        };
+
+        function startLesson(language) {
+            selectedLanguage = language;
+            currentLesson = 0;
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('language-selection').style.display = "none";
+            loadLesson();
+        }
+
+        function loadLesson() {
+            const lesson = lessons[selectedLanguage][currentLesson];
+            document.getElementById('lesson-content').innerHTML = `
+                <h2>${lesson.title}</h2>
+                <p>${lesson.content}</p>
+                <button onclick="startQuiz()">Start Quiz</button>
+            `;
+            document.getElementById('lesson-content').style.display = "block";
+            document.getElementById('quiz-content').style.display = "none";
+            document.getElementById('final-score').style.display = "none";
+        }
+
+        function startQuiz() {
+            currentQuestion = 0;
+            document.getElementById('lesson-content').style.display = "none";
+            document.getElementById('quiz-content').style.display = "block";
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const quiz = lessons[selectedLanguage][currentLesson].quiz;
+            const question = quiz[currentQuestion];
+            document.getElementById('quiz-content').innerHTML = `
+                <h2>Question ${currentQuestion + 1} of ${quiz.length}</h2>
+                <p>${question.question}</p>
+                ${question.options.map((option, index) => `
+                    <div class="quiz-option" onclick="checkAnswer(${index})">${option}</div>
+                `).join('')}
+            `;
+        }
+
+        function checkAnswer(selectedOption) {
+            const quiz = lessons[selectedLanguage][currentLesson].quiz;
+            if (selectedOption === quiz[currentQuestion].answer) {
+                score++;
+                alert("Correct!");
+            } else {
+                alert("Incorrect. The correct answer is: " + quiz[currentQuestion].options[quiz[currentQuestion].answer]);
+            }
+
+            currentQuestion++;
+            if (currentQuestion < quiz.length) {
+                loadQuestion();
+            } else {
+                currentLesson++;
+                if (currentLesson < lessons[selectedLanguage].length) {
+                    loadLesson(); // Move to next lesson
+                } else {
+                    displayFinalScore(); // No more lessons
+                }
+            }
+        }
+
+        function displayFinalScore() {
+            document.getElementById('quiz-content').style.display = "none";
+            document.getElementById('final-score').style.display = "block";
+            document.getElementById('final-score').innerHTML = `
+                <h2>Quiz Complete!</h2>
+                <p>Your final score: ${score} out of ${lessons[selectedLanguage].reduce((sum, lesson) => sum + lesson.quiz.length, 0)}</p>
+                <button onclick="startLesson('${selectedLanguage}')">Restart</button>
+            `;
+        }
+    </script>
+</body>
+
+</body>
+</html>
